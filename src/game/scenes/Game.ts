@@ -3,28 +3,20 @@ import * as bitEcs from "bitecs";
 import { createThisWorld, updateWorld } from '../ecs/ecs';
 
 export class Game extends Phaser.Scene {
+  private world: bitEcs.World
+
   constructor() {
     super("Game");
-    this.world = createThisWorld();
   }
 
   preload() {}
 
   create() {
-    seedWorldWithBoids(this, 1000);
+    this.world = createThisWorld();
+    this.seedWorldWithBoids(this.world, 1000);
   }
 
-  update(_time: any, delta: any) {
-    updateWorld(this.world, delta)
-  }
-  
-  addGraphic(){
-    return this.add.rectangle(0, 0, 20, 5, 0xffffff)
-  }
-}
-
-function seedWorldWithBoids(scene: any, boidAmount: number) {
-  const { world } = scene;
+  private seedWorldWithBoids(world: bitEcs.World, boidAmount: number) {
   const { Graphic, Position, Velocity, Acceleration } = world.components
 
   for (let i = 0; i < boidAmount; i++) {
@@ -46,6 +38,11 @@ function seedWorldWithBoids(scene: any, boidAmount: number) {
     Acceleration.vec2[boid] = new Phaser.Math.Vector2(aX, aY);
 
     bitEcs.addComponent(world, boid, Graphic);
-    Graphic.gameobject[boid] = scene.addGraphic()
+    Graphic.gameobject[boid] = this.add.rectangle(0, 0, 20, 5, 0xffffff)
+
+  }
+}
+  update(_time: any, delta: any) {
+    updateWorld(this.world, delta)
   }
 }

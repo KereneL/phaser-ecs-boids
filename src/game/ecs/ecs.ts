@@ -5,7 +5,7 @@ import { flockSystem } from "./systems/flocking";
 import { movementSystem } from "./systems/movement";
 import { graphicsSystem } from "./systems/graphics";
 
-export function createThisWorld() {
+export function createThisWorld():bitEcs.World {
   return bitEcs.createWorld({
     components: { Graphic, Position, Velocity, Acceleration },
     time: {
