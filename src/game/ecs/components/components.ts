@@ -9,11 +9,11 @@ export const Position = {
 };
 
 export const Velocity = {
-  max: [] as number[],
+  maxSpeed: [] as number[],
   vec2: [] as Phaser.Math.Vector2[]
 };
 
 export const Acceleration = {
-  max: [] as number[],
+  maxForce: [] as number[],
   vec2: [] as Phaser.Math.Vector2[]
 };
