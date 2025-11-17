@@ -12,8 +12,7 @@ export class Game extends Phaser.Scene {
   preload() { }
 
   create() {
-    console.log(this.boidColor)
-    this.world = createThisWorld();
+    this.world = createThisWorld(this);
     this.seedWorldWithBoids(this.world, 100);
   }
 
@@ -26,25 +25,26 @@ export class Game extends Phaser.Scene {
   }
   private createBoid(world: bitEcs.World) {
     const { Graphic, Position, Velocity, Acceleration } = this.world.components
+    let { width, height } = this.sys.game.canvas;
     const boid = bitEcs.addEntity(world);
 
     bitEcs.addComponent(world, boid, Position);
-    const pX = Math.round(Phaser.Math.RND.between(0, 1024));
-    const pY = Math.round(Phaser.Math.RND.between(0, 768));
+    const pX = Math.round(Phaser.Math.RND.between(0, width));
+    const pY = Math.round(Phaser.Math.RND.between(0, height));
     Position.vec2[boid] = new Phaser.Math.Vector2(pX, pY)
 
     bitEcs.addComponent(world, boid, Velocity);
     Velocity.maxSpeed[boid] = 4;
-    Velocity.vec2[boid] = new Phaser.Math.Vector2()
+    const vX = Phaser.Math.RND.realInRange(-1, 1);
+    const vY = Phaser.Math.RND.realInRange(-1, 1);
+    Velocity.vec2[boid] = new Phaser.Math.Vector2(vX,vY)
 
     bitEcs.addComponent(world, boid, Acceleration);
-    const aX = Phaser.Math.RND.realInRange(-1, 1);
-    const aY = Phaser.Math.RND.realInRange(-1, 1);
     Acceleration.maxForce[boid] = 1;
-    Acceleration.vec2[boid] = new Phaser.Math.Vector2(aX, aY);
+    Acceleration.vec2[boid] = new Phaser.Math.Vector2();
 
     bitEcs.addComponent(world, boid, Graphic);
-    Graphic.gameobject[boid] = this.add.rectangle(0, 0, 20, 5, this.boidColor.color)
+    Graphic.gameobject[boid] = this.add.rectangle(0, 0, 16, 4, this.boidColor.color)
   }
   update(_time: any, delta: any) {
     updateWorld(this.world, delta)

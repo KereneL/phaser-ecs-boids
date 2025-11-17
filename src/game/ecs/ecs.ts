@@ -5,14 +5,15 @@ import { flockSystem } from "./systems/flocking";
 import { movementSystem } from "./systems/movement";
 import { graphicsSystem } from "./systems/graphics";
 
-export function createThisWorld():bitEcs.World {
+export function createThisWorld(scene: Phaser.Scene):bitEcs.World {
   return bitEcs.createWorld({
     components: { Graphic, Position, Velocity, Acceleration },
     time: {
       delta: 0,
       elapsed: 0,
       then: 0
-    }
+    },
+    scene,
   });
 }
 
