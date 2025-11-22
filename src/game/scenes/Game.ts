@@ -39,7 +39,7 @@ export class Game extends Phaser.Scene {
     Velocity.maxSpeed[boid] = 4;
     const vX = Phaser.Math.RND.realInRange(-1, 1);
     const vY = Phaser.Math.RND.realInRange(-1, 1);
-    Velocity.vec2[boid] = new Phaser.Math.Vector2(vX,vY)
+    Velocity.vec2[boid] = new Phaser.Math.Vector2(vX, vY)
 
     bitEcs.addComponent(world, boid, Acceleration);
     Acceleration.maxForce[boid] = 1;

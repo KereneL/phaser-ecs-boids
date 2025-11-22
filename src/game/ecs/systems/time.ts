@@ -1,6 +1,6 @@
 
 
-export const timeSystem = (world:any ,delta: any) => {
+export const timeSystem = (world: any, delta: any) => {
   const { time } = world
   time.delta = delta
   time.elapsed += delta

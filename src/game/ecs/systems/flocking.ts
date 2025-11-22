@@ -26,7 +26,7 @@ function flock(eid: number, boids: number[]) {
     seperationVector.copy(separate(eid, boids));
     alignmentVector.copy(align(eid, boids));
     cohesionVector.copy(cohere(eid, boids));
-    
+
     steerSumForce.reset()
         .add(seperationVector.scale(2))
         .add(alignmentVector.scale(1))
