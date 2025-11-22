@@ -9,7 +9,9 @@ export class Game extends Phaser.Scene {
     super("Game");
   }
 
-  preload() { }
+  preload() {
+    this.load.spritesheet("hover-bug", '/HoverBug.png', { frameWidth: 24, frameHeight: 24 })
+  }
 
   create() {
     this.world = createThisWorld(this);
@@ -24,7 +26,7 @@ export class Game extends Phaser.Scene {
     }
   }
   private createBoid(world: bitEcs.World) {
-    const { Graphic, Position, Velocity, Acceleration } = this.world.components
+    const { Sprite, Graphic, Position, Velocity, Acceleration } = this.world.components
     let { width, height } = this.sys.game.canvas;
     const boid = bitEcs.addEntity(world);
 
@@ -43,8 +45,14 @@ export class Game extends Phaser.Scene {
     Acceleration.maxForce[boid] = 1;
     Acceleration.vec2[boid] = new Phaser.Math.Vector2();
 
-    bitEcs.addComponent(world, boid, Graphic);
-    Graphic.gameobject[boid] = this.add.rectangle(0, 0, 16, 4, this.boidColor.color)
+    const rnd = Math.random();
+    if (rnd > 0.5) {
+      bitEcs.addComponent(world, boid, Graphic);
+      Graphic.gameobject[boid] = this.add.rectangle(0, 0, 16, 4, this.boidColor.color)
+    } else {
+      bitEcs.addComponent(world, boid, Sprite);
+      Sprite.gameobject[boid] = this.add.sprite(0, 0, "hover-bug")
+    }
   }
   update(_time: any, delta: any) {
     updateWorld(this.world, delta)

@@ -1,5 +1,9 @@
 import * as Phaser from "phaser";
 
+export const Sprite = {
+  gameobject: [] as Phaser.GameObjects.Sprite[],
+};
+
 export const Graphic = {
   gameobject: [] as Phaser.GameObjects.GameObject[],
 };
